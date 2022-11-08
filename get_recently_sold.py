@@ -76,6 +76,7 @@ with requests.Session() as s:
         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
         writeData(out_file_name, resultList, page_number, wr)
     while True:
+        time.sleep(60*sleep_minutes)
         page_number += page_offset
         print("page number: ", page_number)
         url = base_url + str(page_number) + '_p/'
@@ -88,4 +89,3 @@ with requests.Session() as s:
                 writeData(out_file_name, resultList, page_number, wr)
         else:
             break
-        time.sleep(60*sleep_minutes)
