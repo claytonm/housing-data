@@ -71,7 +71,7 @@ req_headers = {
 with requests.Session() as s:
     r = s.get(base_url, headers=req_headers)
     resultList = getResultList(r)
-    with open(out_file_name, 'wt') as myfile:
+    with open(out_file_name, 'at') as myfile:
         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
         writeData(out_file_name, resultList, page_number, wr)
     while True:
