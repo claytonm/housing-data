@@ -53,7 +53,7 @@ def extractData(listing):
 out_file_name = 'recently_sold.csv'
 page_number = int(sys.argv[1])
 page_offset = int(sys.argv[2])
-sleep_minutes = 15
+sleep_minutes = 1
 
 
 city_state = 'boston-ma/'
@@ -67,6 +67,8 @@ req_headers = {
     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'
 }
 
+iters = 1
+
 
 with requests.Session() as s:
     r = s.get(base_url, headers=req_headers)
@@ -75,7 +77,8 @@ with requests.Session() as s:
     with open(out_file_name, 'at') as myfile:
         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
         writeData(out_file_name, resultList, page_number, wr)
-    while True:
+    while True and iters < 50:
+        iters += 1
         time.sleep(60*sleep_minutes)
         page_number += page_offset
         print("page number: ", page_number)
