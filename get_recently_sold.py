@@ -70,12 +70,14 @@ req_headers = {
 
 with requests.Session() as s:
     r = s.get(base_url, headers=req_headers)
+    print("r is ok: ", r.ok)
     resultList = getResultList(r)
     with open(out_file_name, 'at') as myfile:
         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
         writeData(out_file_name, resultList, page_number, wr)
     while True:
         page_number += page_offset
+        print("page number: ", page_number)
         url = base_url + str(page_number) + '_p/'
         r = s.get(url, headers=req_headers)
         if r.ok:
