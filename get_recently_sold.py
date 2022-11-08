@@ -85,6 +85,7 @@ with requests.Session() as s:
             with open(out_file_name, 'at') as myfile:
                 wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
                 writeData(out_file_name, resultList, page_number, wr)
+        print("r is ok: ", r.ok)
         else:
             break
         time.sleep(60*sleep_minutes)
