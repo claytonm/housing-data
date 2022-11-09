@@ -71,7 +71,7 @@ req_headers = {
 iters = 1
 url = base_url
 with requests.Session() as s:
-    while iters <= 50:
+    while iters <= 25:
         r = s.get(url, headers=req_headers)
         print("r.ok: ", r.ok)
         if r.ok:
