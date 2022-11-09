@@ -73,6 +73,7 @@ url = base_url
 with requests.Session() as s:
     while iters <= 50:
         r = s.get(url, headers=req_headers)
+        print("r.ok: ", r.ok)
         if r.ok:
             resultList = getResultList(r)
             with open(out_file_name, 'at') as myfile:
