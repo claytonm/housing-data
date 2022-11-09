@@ -54,7 +54,7 @@ page_number = int(sys.argv[1])
 page_offset = int(sys.argv[2])
 neighborhood = sys.argv[3]
 out_file_name = 'recently_sold_' + neighborhood + '.csv'
-sleep_minutes = 1
+sleep_minutes = 5
 
 
 city_state = neighborhood + '%20boston%20ma/'
