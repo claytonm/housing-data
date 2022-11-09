@@ -50,13 +50,14 @@ def extractData(listing):
     return listingData + homeInfoData + [sell_date]
 
 
-out_file_name = 'recently_sold.csv'
 page_number = int(sys.argv[1])
 page_offset = int(sys.argv[2])
+neighorhood = sys.argv[3]
+out_file_name = 'recently_sold_' + neighorhood + '.csv'
 sleep_minutes = 1
 
 
-city_state = 'boston-ma/'
+city_state = neighborhood + '%20boston%20ma/'
 base_url = 'https://www.zillow.com/homes/recently_sold/' + city_state
 
 req_headers = {
@@ -68,23 +69,10 @@ req_headers = {
 }
 
 iters = 1
-
-
+url = base_url
 with requests.Session() as s:
-    r = s.get(base_url, headers=req_headers)
-    print("r is ok: ", r.ok)
-    resultList = getResultList(r)
-    with open(out_file_name, 'at') as myfile:
-        wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-        writeData(out_file_name, resultList, page_number, wr)
-    while True and iters < 50:
-        iters += 1
-        time.sleep(60*sleep_minutes)
-        page_number += page_offset
-        print("page number: ", page_number)
-        url = base_url + str(page_number) + '_p/'
+    while iters <= 50:
         r = s.get(url, headers=req_headers)
-        print("r is ok: ", r.ok)
         if r.ok:
             resultList = getResultList(r)
             with open(out_file_name, 'at') as myfile:
@@ -92,3 +80,9 @@ with requests.Session() as s:
                 writeData(out_file_name, resultList, page_number, wr)
         else:
             break
+        iters += 1
+        time.sleep(60*sleep_minutes)
+        page_number += page_offset
+        print("page number: ", page_number)
+        url = base_url + str(page_number) + '_p/'
+
